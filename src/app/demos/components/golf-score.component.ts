@@ -1,4 +1,10 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  signal,
+  output,
+  input,
+} from '@angular/core';
 
 @Component({
   selector: 'app-golf-score',
@@ -17,11 +23,11 @@ import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
   styles: ``,
 })
 export class GolfScoreComponent {
-  currentScore = signal(0); // state
+  currentScore = input<number>(0);
+  scoreChanged = output<number>();
 
   addStroke() {
-    // this.currentScore.set(this.currentScore() + 1); // changeable
-    this.currentScore.update((c) => c + 1);
     // hey, update the dom wherever the currentScore is shown now.
+    this.scoreChanged.emit(this.currentScore() + 1);
   }
 }
