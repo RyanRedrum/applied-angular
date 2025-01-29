@@ -7,9 +7,14 @@ import { RouterOutlet, RouterLink } from '@angular/router';
   imports: [RouterOutlet, RouterLink],
   template: `
     <div>
-      <div>
-        <a class="link" routerLink="ui">UI</a>
-      </div>
+      <ul>
+        <li>
+          <a class="link" routerLink="ui">UI</a>
+        </li>
+        <li>
+          <a class="link" routerLink="prefs">Preferences</a>
+        </li>
+      </ul>
 
       <router-outlet />
     </div>

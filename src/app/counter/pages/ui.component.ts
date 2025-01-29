@@ -1,25 +1,27 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  signal,
+  inject,
   computed,
 } from '@angular/core';
+import { CounterStore } from '../services/counter.store';
 
 @Component({
   selector: 'app-ui',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],
+  providers: [],
   template: `
     <div>
       <button
         class="btn btn-primary"
-        (click)="decrement()"
-        [disabled]="!canDecrement()"
+        (click)="store.decrement()"
+        [disabled]="!store.canDecrement()"
       >
         -
       </button>
-      <span data-testid="current">{{ count() }}</span>
-      <button class="btn btn-primary" (click)="increment()">+</button>
+      <span data-testid="current">{{ store.counter() }}</span>
+      <button class="btn btn-primary" (click)="store.increment()">+</button>
     </div>
     <div>
       <span data-testid="fizzBuzz">{{ fizzBuzz() }}</span>
@@ -28,10 +30,9 @@ import {
   styles: ``,
 })
 export class UiComponent {
-  count = signal<number>(0);
-  canDecrement = computed(() => this.count() > 0);
+  store = inject(CounterStore);
   fizzBuzz = computed(() => {
-    const currentCount = this.count();
+    const currentCount = this.store.counter();
     if (currentCount === 0) {
       return '';
     }
@@ -49,14 +50,4 @@ export class UiComponent {
 
     return '';
   });
-
-  increment = () => {
-    this.count.update(() => this.count() + 1);
-  };
-
-  decrement = () => {
-    if (this.canDecrement()) {
-      this.count.update(() => this.count() - 1);
-    }
-  };
 }
