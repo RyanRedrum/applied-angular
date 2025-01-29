@@ -15,4 +15,9 @@ export const routes: Routes = [
     path: 'golf',
     loadChildren: () => import('./golf/golf.routes').then((r) => r.GOLF_ROUTES),
   },
+  {
+    path: 'counter',
+    loadChildren: () =>
+      import('./counter/counter.routes').then((r) => r.COUNTER_ROUTES),
+  },
 ];
